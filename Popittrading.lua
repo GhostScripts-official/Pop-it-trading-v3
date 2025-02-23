@@ -1,33 +1,33 @@
--- Скрипт GhostScripts V2 для Pop It Trading
+-- GhostScripts V2 for Pop It Trading
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Создаем ScreenGui
+-- Create ScreenGui
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 
--- Создаем кнопку для подбора предметов
-local pickupButton = Instance.new("TextButton")
-pickupButton.Size = UDim2.new(0, 200, 0, 50)
-pickupButton.Position = UDim2.new(0.5, -100, 0.5, -25)
-pickupButton.Text = "Подобрать предметы"
-pickupButton.Parent = screenGui
+-- Create a button for picking items
+local pickButton = Instance.new("TextButton")
+pickButton.Size = UDim2.new(0, 200, 0, 50)
+pickButton.Position = UDim2.new(0.5, -100, 0.5, -25)
+pickButton.Text = "Pick Items"
+pickButton.Parent = screenGui
 
--- Радиус подбора предметов
+-- Pickup range for items
 local pickupRange = 10
 
--- Функция для подбора предметов
+-- Function to pick up items
 local function pickupItems()
     local character = player.Character
     if character and character:FindFirstChild("HumanoidRootPart") then
         local humanoidRootPart = character.HumanoidRootPart
         
-        -- Проверяем все объекты в workspace
+        -- Check all objects in workspace
         for _, item in pairs(workspace:GetChildren()) do
             if item:IsA("Model") and item:FindFirstChild("Handle") then
                 local handle = item.Handle
                 if (handle.Position - humanoidRootPart.Position).magnitude <= pickupRange then
-                    -- Симулируем взаимодействие с предметом
+                    -- Simulate interaction with item
                     firetouchinterest(handle, humanoidRootPart, 0)
                     firetouchinterest(handle, humanoidRootPart, 1)
                 end
@@ -36,7 +36,7 @@ local function pickupItems()
     end
 end
 
--- Обработчик для кнопки
-pickupButton.MouseButton1Click:Connect(function()
+-- Button click handler
+pickButton.MouseButton1Click:Connect(function()
     pickupItems()
 end)
